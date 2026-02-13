@@ -3,7 +3,8 @@ CREATE TABLE public.pagos (
 	id_credito int8 NOT NULL, -- Identificador del credito
 	fecha_pago date NOT NULL, -- Fecha del pago
 	valor_pago numeric(10, 2) NOT NULL, -- Valor del pago
-	CONSTRAINT pagos_pk PRIMARY KEY (id_pago)
+	CONSTRAINT pagos_pk PRIMARY KEY (id_pago),
+	CONSTRAINT pagos_saldo_credito_fk FOREIGN KEY (id_credito) REFERENCES public.saldo_credito(id_credito)
 )
 PARTITION BY RANGE (fecha_pago);
 CREATE INDEX idx_pagos_credito_fecha ON ONLY public.pagos USING btree (id_credito, fecha_pago);
