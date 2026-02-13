@@ -126,3 +126,16 @@ UPDATE creditos c
         SET estado = false
     FROM creditos_random cr
     WHERE c.id_credito = cr.id_credito;
+
+
+-- mover algunos pagos al mes anterior para hacer la consulta de recaudación mensual 
+WITH pagos_random AS (
+    SELECT id_pago
+        FROM pagos
+    TABLESAMPLE SYSTEM (5)   -- toma muestra sin ordenar todo
+    LIMIT 500000
+)
+UPDATE pagos p
+        SET fecha_pago = date_trunc('month', CURRENT_DATE) - INTERVAL '15 days'
+    FROM pagos_random pr
+    WHERE p.id_pago = pr.id_pago;
