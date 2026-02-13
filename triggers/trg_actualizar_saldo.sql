@@ -1,0 +1,5 @@
+CREATE TRIGGER trg_actualizar_saldo
+AFTER INSERT OR UPDATE OR DELETE
+ON pagos
+FOR EACH ROW
+EXECUTE FUNCTION fn_actualizar_saldo();

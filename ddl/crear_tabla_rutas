@@ -1,0 +1,15 @@
+CREATE TABLE public.rutas (
+	id_ruta int8 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1 NO CYCLE) NOT NULL, -- Identificador de la ruta
+	id_cobrador int8 NOT NULL, -- Identificador del cobrador
+	zona varchar(50) NOT NULL, -- Zona de la ruta
+	CONSTRAINT rutas_pk PRIMARY KEY (id_ruta),
+	CONSTRAINT rutas_cobradores_fk FOREIGN KEY (id_cobrador) REFERENCES public.cobradores(id_cobrador)
+);
+CREATE INDEX rutas_id_cobrador_idx ON public.rutas USING btree (id_cobrador);
+COMMENT ON TABLE public.rutas IS 'Almacena la ruta asignada al cobrador de la empresa';
+
+-- Column comments
+
+COMMENT ON COLUMN public.rutas.id_ruta IS 'Identificador de la ruta';
+COMMENT ON COLUMN public.rutas.id_cobrador IS 'Identificador del cobrador';
+COMMENT ON COLUMN public.rutas.zona IS 'Zona de la ruta';
